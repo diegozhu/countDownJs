@@ -1,34 +1,44 @@
-function dInterval(beginFunc,endFunc,intervalFunc,intervalCount,timespanMillisecond){
+function dInterval(beginFunc,endFunc,intervalFunc,totalCount,timespanMillisecond){
 		beginFunc = typeof beginFunc == "function" ? beginFunc : function(){};
 		endFunc = typeof endFunc == "function" ? endFunc : function(){};
 		intervalFunc = typeof intervalFunc == "function" ? intervalFunc : function(){};
-		intervalCount = typeof intervalCount == "string" ? parseInt(intervalCount) : intervalCount;
+		totalCount = typeof totalCount == "string" ? parseInt(totalCount) : totalCount;
 		timespanMillisecond = typeof timespanMillisecond == "string" ? parseInt(timespanMillisecond) : timespanMillisecond;
-		intervalCount = intervalCount > 1 ? intervalCount : 5;
+		totalCount = totalCount > 1 ? totalCount : 5;
 		timespanMillisecond = timespanMillisecond > 0 ? timespanMillisecond : 1000;
 		var handler = {
 				handlers : [],
+				_beginFunc : beginFunc,
+				_intervalFunc : intervalFunc,
+				_endFunc : endFunc,
+				_totalCount : totalCount,
+				_timespanMillisecond : timespanMillisecond,
+				_currentCount : 0,
 				clear : function(){
 					for(var i in this.handlers){
 						clearTimeout(this.handlers[i]);
 					}
+				},
+				interrupt : function(){
+					this.clear();
+					this._endFunc(this._currentCount,this._totalCount,this._timespanMillisecond);
 				}
 		};
-		for(var i = 0;i<intervalCount;i++){
+		for(var i = 0;i<totalCount;i++){
 			(function(time){
 				var a = setTimeout(function(){
-					intervalFunc(time,intervalCount,timespanMillisecond)
+					intervalFunc.call(handler,time,totalCount,timespanMillisecond)
+					handler._currentCount = time;
 				},timespanMillisecond*(time+1));
 				handler.handlers.push(a);
 			})(i);
 		}
-		var a = setTimeout(function(){
-			beginFunc(-1,intervalCount,timespanMillisecond);
+		setTimeout(function(){
+			beginFunc.call(handler,-1,totalCount,timespanMillisecond);
 		},0);
+		var a = setTimeout(function(){
+			endFunc(totalCount,totalCount,timespanMillisecond);
+		},timespanMillisecond * totalCount);
 		handler.handlers.push(a);
-		a = setTimeout(function(){
-			endFunc(intervalCount,intervalCount,timespanMillisecond);
-		},timespanMillisecond*(intervalCount));
-		handler.handlers.push(a);
-		return handler
+		return handler;
 	}
