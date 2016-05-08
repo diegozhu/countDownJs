@@ -1,4 +1,4 @@
-function dInterval(beginFunc,endFunc,intervalFunc,totalCount,timespanMillisecond){
+function countDown(beginFunc,endFunc,intervalFunc,totalCount,timespanMillisecond){
 		beginFunc = typeof beginFunc == "function" ? beginFunc : function(){};
 		endFunc = typeof endFunc == "function" ? endFunc : function(){};
 		intervalFunc = typeof intervalFunc == "function" ? intervalFunc : function(){};
