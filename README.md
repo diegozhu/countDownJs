@@ -1,10 +1,10 @@
-# d-Interval
-enhancement on javascript original interval
+# countDownJs
+enhancement on javascript original interval , based on setTimeout
 
 usage :
 
     var runTimes = 3 , timeInterval = 1000;
-    dInterval(startFunc,intervalFunc,endFunc,runTimes,timeInterval);
+    countDown(startFunc,intervalFunc,endFunc,runTimes,timeInterval);
  
 
 In web development , we usually need to use count down feature like sending text password, reading agreement lisence etc.
@@ -44,7 +44,7 @@ How about compared with this:
 
     var $btn = $('button[name="sendMePassword"]');
     $btn.on('click',function(){
-        var h = dInterval(function(time,totalTime,timeInterval){      //begin
+        var h = countDown(function(time,totalTime,timeInterval){      //begin
             $btn.prop('disabled',true).html('please waiting for '+totalTime+' seconds');
         },function(time,totalTime){      //every 1 second
             $btn.html('please waiting for '+(totalTime - time)+' seconds');
@@ -62,7 +62,7 @@ How about compared with this:
         });
     });
 
-dInterval return an `handler` object
+countDown return an `handler` object
     
 functions of handler:
     
