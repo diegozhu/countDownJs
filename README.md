@@ -66,7 +66,7 @@ countDown return an `handler` object
     
 functions of handler:
     
-`clear` : clear the interval
+`clear` : end the interval immediatelly
 
 `interrupt` : end the interval immediatelly and run endfunc
 
