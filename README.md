@@ -69,5 +69,9 @@ functions of handler:
 `clear` : clear the interval
 
 `interrupt` : end the interval immediatelly and run endfunc
+
+`pause` : pause the interval loop
+
+`resume` : resume the interval loop from where it is paused
     
-`handler.stop/start/restart/repeat` is not supported yet. Maybe in future feature.
+`repeat` is not supported yet. Maybe in future feature.
